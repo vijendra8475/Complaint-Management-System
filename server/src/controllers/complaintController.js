@@ -1,32 +1,35 @@
 import Complaint from "../models/Complaint.js";
+import { predictCategory } from "../ai/categoryPredictor.js";
+import { predictPriority } from "../ai/priorityPredictor.js";
 
-export const createComplaint = async (
-  req,
-  res
-) => {
+export const createComplaint = async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      attachmentUrl,
-    } = req.body;
+    const { title, description, attachmentUrl } = req.body;
 
     if (!title || !description) {
       return res.status(400).json({
         success: false,
-        message:
-          "Title and description are required",
+        message: "Title and description are required",
       });
     }
 
-    const complaint =
-      await Complaint.create({
-        title,
-        description,
-        attachmentUrl,
+    const predictedCategory = await predictCategory(title, description);
 
-        createdBy: req.user._id,
-      });
+    const priority = await predictPriority(title, description);
+
+    const complaint = await Complaint.create({
+      title,
+      description,
+      attachmentUrl,
+
+      category: predictedCategory,
+
+      predictedCategory,
+
+      priority,
+
+      createdBy: req.user._id,
+    });
 
     res.status(201).json({
       success: true,
@@ -42,24 +45,17 @@ export const createComplaint = async (
   }
 };
 
-
-export const getMyComplaints = async (
-  req,
-  res
-) => {
+export const getMyComplaints = async (req, res) => {
   try {
-    const complaints =
-      await Complaint.find({
-        createdBy: req.user._id,
-      })
-      .sort({ createdAt: -1 });
+    const complaints = await Complaint.find({
+      createdBy: req.user._id,
+    }).sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
       count: complaints.length,
       complaints,
     });
-
   } catch (error) {
     console.error(error);
 
@@ -70,13 +66,9 @@ export const getMyComplaints = async (
   }
 };
 
-export const getComplaintById = async (
-  req,
-  res
-) => {
+export const getComplaintById = async (req, res) => {
   try {
-    const complaint =
-      await Complaint.findById(req.params.id);
+    const complaint = await Complaint.findById(req.params.id);
 
     if (!complaint) {
       return res.status(404).json({
@@ -85,10 +77,7 @@ export const getComplaintById = async (
       });
     }
 
-    if (
-      complaint.createdBy.toString() !==
-      req.user._id.toString()
-    ) {
+    if (complaint.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: "Access denied",
@@ -99,7 +88,6 @@ export const getComplaintById = async (
       success: true,
       complaint,
     });
-
   } catch (error) {
     console.error(error);
 
