@@ -6,6 +6,7 @@ import adminOnly from "../middlewares/adminMiddleware.js";
 import {
   getAllComplaints,
   updateComplaintStatus,
+  updateComplaintRemarks
 } from "../controllers/adminControllers.js";
 
 const router = express.Router();
@@ -22,6 +23,13 @@ router.patch(
   protect,
   adminOnly,
   updateComplaintStatus
+);
+
+router.patch(
+  "/complaints/:id/remarks",
+  protect,
+  adminOnly,
+  updateComplaintRemarks
 );
 
 export default router;
