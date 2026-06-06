@@ -1,9 +1,6 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import CreateComplaint from "../pages/employee/CreateComplaint";
 
 import Login from "../pages/auth/Login";
 
@@ -17,20 +14,12 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-
-        <Route
-          path="/"
-          element={<Login />}
-        />
+        <Route path="/" element={<Login />} />
 
         <Route
           path="/employee"
           element={
-            <ProtectedRoute
-              allowedRoles={[
-                "employee",
-              ]}
-            >
+            <ProtectedRoute allowedRoles={["employee"]}>
               <EmployeeDashboard />
             </ProtectedRoute>
           }
@@ -39,23 +28,22 @@ export default function AppRoutes() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute
-              allowedRoles={[
-                "admin",
-              ]}
-            >
+            <ProtectedRoute allowedRoles={["admin"]}>
               <AdminDashboard />
             </ProtectedRoute>
           }
         />
 
+        <Route path="*" element={<Navigate to="/" />} />
+
         <Route
-          path="*"
+          path="/employee/create"
           element={
-            <Navigate to="/" />
+            <ProtectedRoute allowedRoles={["employee"]}>
+              <CreateComplaint />
+            </ProtectedRoute>
           }
         />
-
       </Routes>
     </BrowserRouter>
   );
