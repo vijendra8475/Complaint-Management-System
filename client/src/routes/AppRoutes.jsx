@@ -14,6 +14,10 @@ import MyComplaints from "../pages/employee/MyComplaints";
 
 import ComplaintDetails from "../pages/employee/ComplaintDetails";
 
+import Complaints from "../pages/admin/Complaints";
+
+import Analytics from "../pages/admin/Analytics";
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -63,6 +67,24 @@ export default function AppRoutes() {
           element={
             <ProtectedRoute allowedRoles={["employee"]}>
               <ComplaintDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/complaints"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Complaints />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/analytics"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Analytics />
             </ProtectedRoute>
           }
         />

@@ -2,7 +2,10 @@ import { LayoutDashboard, FileText, BarChart3, LogOut } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
+import useAuth from "../../hooks/useAuth";
+
 export default function Sidebar() {
+  const { user } = useAuth();
   return (
     <aside className="w-64 bg-white border-r min-h-screen">
       <div className="p-6 border-b">
@@ -10,6 +13,12 @@ export default function Sidebar() {
       </div>
 
       <nav className="p-4 space-y-2">
+        <Link to="/admin/dashboard">Dashboard</Link>
+
+        <Link to="/admin/complaints">Complaints</Link>
+
+        <Link to="/admin/analytics">Analytics</Link>
+
         <Link
           to="/employee/create"
           className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"

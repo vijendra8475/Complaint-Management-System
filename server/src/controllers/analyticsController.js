@@ -70,13 +70,13 @@ export const getAnalytics = async (req, res) => {
     res.status(200).json({
       success: true,
 
-    //   totalComplaints,
-    //   resolvedComplaints,
-    //   pendingComplaints,
-    //   rejectedComplaints,
+      totalComplaints,
+      resolvedComplaints,
+      pendingComplaints,
+      rejectedComplaints,
 
-    //   categoryStats,
-    //   priorityStats,
+      categoryStats,
+      priorityStats,
     monthlyTrends
     });
   } catch (error) {
