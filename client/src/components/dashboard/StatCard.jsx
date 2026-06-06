@@ -1,11 +1,14 @@
+import { Card } from "@/components/ui/card";
+
 export default function StatCard({
   title,
   value,
+  subtitle,
 }) {
   return (
-    <div className="bg-white rounded-xl border p-6">
+    <Card className="p-6">
 
-      <p className="text-slate-500">
+      <p className="text-sm text-muted-foreground">
         {title}
       </p>
 
@@ -13,6 +16,10 @@ export default function StatCard({
         {value}
       </h2>
 
-    </div>
+      <p className="text-xs text-muted-foreground mt-2">
+        {subtitle}
+      </p>
+
+    </Card>
   );
 }

@@ -9,6 +9,14 @@ import {
   AuthProvider,
 } from "./context/AuthContext";
 
+import {
+  Toaster,
+} from "react-hot-toast";
+
+<Toaster
+  position="top-right"
+/>
+
 ReactDOM.createRoot(
   document.getElementById("root")
 ).render(

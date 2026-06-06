@@ -1,6 +1,10 @@
 import { Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
+import {
+  Skeleton,
+} from "@/components/ui/skeleton";
+
 export default function ProtectedRoute({
   children,
   allowedRoles,
@@ -8,7 +12,15 @@ export default function ProtectedRoute({
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><div className="space-y-4">
+
+  <Skeleton className="h-12 w-full" />
+
+  <Skeleton className="h-12 w-full" />
+
+  <Skeleton className="h-12 w-full" />
+
+</div></div>;
   }
 
   if (!user) {

@@ -4,6 +4,8 @@ import AdminLayout from "../../layouts/AdminLayout";
 
 import { getAnalytics } from "../../services/analyticsService";
 
+import { Skeleton } from "@/components/ui/skeleton";
+
 import {
   PieChart,
   Pie,
@@ -33,7 +35,17 @@ export default function Analytics() {
   }, []);
 
   if (!analytics) {
-    return <AdminLayout>Loading...</AdminLayout>;
+    return (
+      <AdminLayout>
+        <div className="space-y-4">
+          <Skeleton className="h-12 w-full" />
+
+          <Skeleton className="h-12 w-full" />
+
+          <Skeleton className="h-12 w-full" />
+        </div>
+      </AdminLayout>
+    );
   }
 
   console.log(analytics);
