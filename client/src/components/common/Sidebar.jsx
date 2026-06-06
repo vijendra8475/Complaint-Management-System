@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function Sidebar() {
   const handleLogout = () => {
     logout();
     navigate("/");
+    toast.success("Logged out successfully");
   };
 
   return (
