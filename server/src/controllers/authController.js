@@ -79,6 +79,8 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log({ email, password});
+    
 
     if (!email || !password) {
       return res.status(400).json({
@@ -89,10 +91,13 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
 
+    console.log(email);
+    
+
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Invalid credentials",
+        message: "Invalid user",
       });
     }
 
@@ -104,7 +109,7 @@ export const loginUser = async (req, res) => {
     if (!isPasswordCorrect) {
       return res.status(401).json({
         success: false,
-        message: "Invalid credentials",
+        message: "Invalid password",
       });
     }
 

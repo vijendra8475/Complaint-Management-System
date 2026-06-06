@@ -1,12 +1,14 @@
-import api from "./api";
+import api from "@/services/api";
 
-export const getAllComplaints = async () => {
-  const response = await api.get(
-    "/admin/complaints"
-  );
+export const getAllComplaints =
+  async () => {
+    const response =
+      await api.get(
+        "/admin/complaints"
+      );
 
-  return response.data;
-};
+    return response.data;
+  };
 
 export const updateComplaintStatus =
   async (id, status) => {

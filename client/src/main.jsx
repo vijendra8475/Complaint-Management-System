@@ -2,25 +2,27 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import App from "./App";
-
 import "./index.css";
 
 import {
   AuthProvider,
-} from "./context/AuthContext";
+} from "@/context/AuthContext";
 
 import {
   Toaster,
 } from "react-hot-toast";
 
-<Toaster
-  position="top-right"
-/>
-
 ReactDOM.createRoot(
-  document.getElementById("root")
+  document.getElementById(
+    "root"
+  )
 ).render(
-  <AuthProvider>
-    <App />
-  </AuthProvider>
+  <React.StrictMode>
+    <AuthProvider>
+      <App />
+      <Toaster
+        position="top-right"
+      />
+    </AuthProvider>
+  </React.StrictMode>
 );

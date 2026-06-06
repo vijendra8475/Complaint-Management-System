@@ -1,5 +1,5 @@
-import Sidebar from "../components/common/Sidebar";
-import Navbar from "../components/common/Navbar";
+import Sidebar from "@/components/common/Sidebar";
+import Navbar from "@/components/common/Navbar";
 
 export default function EmployeeLayout({
   children,

@@ -1,61 +1,94 @@
-import { LayoutDashboard, FileText, BarChart3, LogOut } from "lucide-react";
+import { LayoutDashboard, PlusCircle, FileText, LogOut } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
-import useAuth from "../../hooks/useAuth";
-
+import useAuth from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
-    <aside className="w-64 bg-white border-r min-h-screen">
+    <aside className="w-64 bg-white border-r min-h-screen flex flex-col">
       <div className="p-6 border-b">
         <h1 className="text-xl font-bold">WITS</h1>
       </div>
 
       <nav className="p-4 space-y-2">
-        <Link to="/admin/dashboard">Dashboard</Link>
+        {user?.role === "employee" && (
+          <>
+            <Link
+              to="/employee"
+              className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
+            >
+              <LayoutDashboard size={18} />
+              Dashboard
+            </Link>
 
-        <Link to="/admin/complaints">Complaints</Link>
+            <Link
+              to="/employee/create"
+              className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
+            >
+              <PlusCircle size={18} />
+              Create Complaint
+            </Link>
 
-        <Link to="/admin/analytics">Analytics</Link>
+            <Link
+              to="/employee/complaints"
+              className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
+            >
+              <FileText size={18} />
+              My Complaints
+            </Link>
+          </>
+        )}
 
-        <Link
-          to="/employee/create"
-          className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
+        {user?.role === "admin" && (
+          <>
+            <Link
+              to="/admin"
+              className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
+            >
+              <LayoutDashboard size={18} />
+              Dashboard
+            </Link>
+
+            <Link
+              to="/admin/complaints"
+              className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
+            >
+              <FileText size={18} />
+              Complaints
+            </Link>
+
+            <Link
+              to="/admin/analytics"
+              className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
+            >
+              📊 Analytics
+            </Link>
+          </>
+        )}
+
+        <hr className="my-4" />
+
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 p-3 rounded hover:bg-red-50 text-red-600 transition"
         >
-          Create Complaint
-        </Link>
-
-        <Link
-          to="/employee"
-          className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
-        >
-          <LayoutDashboard size={18} />
-          Dashboard
-        </Link>
-
-        <Link
-          to="/employee/complaints"
-          className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
-        >
-          <FileText size={18} />
-          My Complaints
-        </Link>
-
-        <Link
-          to="/admin/analytics"
-          className="flex items-center gap-3 p-3 rounded hover:bg-slate-100"
-        >
-          <BarChart3 size={18} />
-          Analytics
-        </Link>
-
-        <button className="w-full flex items-center gap-3 p-3 rounded hover:bg-slate-100">
           <LogOut size={18} />
           Logout
         </button>
       </nav>
+
+      <div className="mt-auto p-4 border-t">
+        <p className="text-sm">{user?.name}</p>
+      </div>
     </aside>
   );
 }

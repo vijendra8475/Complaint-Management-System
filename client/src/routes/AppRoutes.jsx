@@ -1,22 +1,16 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import CreateComplaint from "../pages/employee/CreateComplaint";
+import Login from "@/pages/auth/Login";
+import EmployeeDashboard from "@/pages/employee/Dashboard";
+import CreateComplaint from "@/pages/employee/CreateComplaint";
+import MyComplaints from "@/pages/employee/MyComplaints";
+import ComplaintDetails from "@/pages/employee/ComplaintDetails";
 
-import Login from "../pages/auth/Login";
+import AdminDashboard from "@/pages/admin/Dashboard";
+import Complaints from "@/pages/admin/Complaints";
+import Analytics from "@/pages/admin/Analytics";
 
-import EmployeeDashboard from "../pages/employee/Dashboard";
-
-import AdminDashboard from "../pages/admin/Dashboard";
-
-import ProtectedRoute from "./ProtectedRoute";
-
-import MyComplaints from "../pages/employee/MyComplaints";
-
-import ComplaintDetails from "../pages/employee/ComplaintDetails";
-
-import Complaints from "../pages/admin/Complaints";
-
-import Analytics from "../pages/admin/Analytics";
+import ProtectedRoute from "@/routes/ProtectedRoute";
 
 export default function AppRoutes() {
   return (
@@ -32,17 +26,6 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         />
-
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRoles={["admin"]}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route path="*" element={<Navigate to="/" />} />
 
         <Route
           path="/employee/create"
@@ -67,6 +50,15 @@ export default function AppRoutes() {
           element={
             <ProtectedRoute allowedRoles={["employee"]}>
               <ComplaintDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminDashboard />
             </ProtectedRoute>
           }
         />

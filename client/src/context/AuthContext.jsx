@@ -1,41 +1,21 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useEffect, useState } from "react";
 
-import {
-  loginUser,
-  getCurrentUser,
-} from "../services/authService";
+import { loginUser, getCurrentUser } from "@/services/authService";
 
-const AuthContext =
-  createContext();
+const AuthContext = createContext();
 
-export const AuthProvider = ({
-  children,
-}) => {
-  const [user, setUser] =
-    useState(null);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const login = async (
-    email,
-    password
-  ) => {
-    const data =
-      await loginUser({
-        email,
-        password,
-      });
+  const login = async (email, password) => {
+    const data = await loginUser({
+      email,
+      password,
+    });
 
-    localStorage.setItem(
-      "token",
-      data.token
-    );
+    localStorage.setItem("token", data.token);
 
     setUser(data.user);
 
@@ -43,40 +23,31 @@ export const AuthProvider = ({
   };
 
   const logout = () => {
-    localStorage.removeItem(
-      "token"
-    );
-
+    localStorage.removeItem("token");
     setUser(null);
+
+    window.location.href = "/";
   };
 
   useEffect(() => {
-    const loadUser =
-      async () => {
-        try {
-          const token =
-            localStorage.getItem(
-              "token"
-            );
+    const loadUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-          if (!token) {
-            setLoading(false);
-            return;
-          }
-
-          const data =
-            await getCurrentUser();
-
-          setUser(data.user);
-
-        } catch {
-          localStorage.removeItem(
-            "token"
-          );
-        } finally {
+        if (!token) {
           setLoading(false);
+          return;
         }
-      };
+
+        const data = await getCurrentUser();
+
+        setUser(data.user);
+      } catch {
+        localStorage.removeItem("token");
+      } finally {
+        setLoading(false);
+      }
+    };
 
     loadUser();
   }, []);
@@ -95,5 +66,5 @@ export const AuthProvider = ({
   );
 };
 
-export const useAuth = () =>
-  useContext(AuthContext);
+// export const useAuth = () => useContext(AuthContext);
+export default AuthContext;

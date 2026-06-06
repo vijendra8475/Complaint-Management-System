@@ -1,37 +1,42 @@
 import { Navigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-
-import {
-  Skeleton,
-} from "@/components/ui/skeleton";
+import useAuth from "@/hooks/useAuth";
 
 export default function ProtectedRoute({
   children,
   allowedRoles,
 }) {
-  const { user, loading } = useAuth();
+  const { user, loading } =
+    useAuth();
 
   if (loading) {
-    return <div><div className="space-y-4">
-
-  <Skeleton className="h-12 w-full" />
-
-  <Skeleton className="h-12 w-full" />
-
-  <Skeleton className="h-12 w-full" />
-
-</div></div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
   }
 
   if (!user) {
-    return <Navigate to="/" replace />;
+    return (
+      <Navigate
+        to="/"
+        replace
+      />
+    );
   }
 
   if (
     allowedRoles &&
-    !allowedRoles.includes(user.role)
+    !allowedRoles.includes(
+      user.role
+    )
   ) {
-    return <Navigate to="/" replace />;
+    return (
+      <Navigate
+        to="/"
+        replace
+      />
+    );
   }
 
   return children;

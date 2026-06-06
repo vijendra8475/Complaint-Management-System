@@ -1,82 +1,96 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import StatusBadge from "../../components/StatusBadge";
+import {
+  useEffect,
+  useState,
+} from "react";
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { Link } from "react-router-dom";
+
+import EmployeeLayout from "@/layouts/EmployeeLayout";
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  getMyComplaints,
+} from "@/services/complaintService";
 
-import EmployeeLayout from "../../layouts/EmployeeLayout";
-import { getMyComplaints } from "../../services/complaintService";
+import StatusBadge from "@/components/complaints/StatusBadge";
 
 export default function MyComplaints() {
-  const [complaints, setComplaints] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-
-  const fetchComplaints = async () => {
-    try {
-      const data = await getMyComplaints();
-
-      setComplaints(data.complaints || []);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [complaints,
+    setComplaints] =
+    useState([]);
 
   useEffect(() => {
-    fetchComplaints();
+    loadComplaints();
   }, []);
 
-  if (loading) {
-    return (
-      <EmployeeLayout>
-        <div className="space-y-4">
-          <Skeleton className="h-12 w-full" />
+  const loadComplaints =
+    async () => {
+      const data =
+        await getMyComplaints();
 
-          <Skeleton className="h-12 w-full" />
-
-          <Skeleton className="h-12 w-full" />
-        </div>
-      </EmployeeLayout>
-    );
-  }
+      setComplaints(
+        data.complaints
+      );
+    };
 
   return (
     <EmployeeLayout>
-      <h1 className="text-3xl font-bold mb-6">My Complaints</h1>
 
-      <div className="bg-white rounded-xl border overflow-hidden">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
+      <h1 className="text-3xl font-bold mb-6">
+        My Complaints
+      </h1>
 
-          <TableBody>
-            {complaints.map((complaint) => (
-              <TableRow key={complaint._id}>
-                <TableCell>{complaint.title}</TableCell>
+      <div className="bg-white border rounded-xl overflow-hidden">
 
-                <TableCell>
-                  <StatusBadge status={complaint.status} />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <table className="w-full">
+
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {complaints.map(
+              (complaint) => (
+                <tr
+                  key={
+                    complaint._id
+                  }
+                >
+                  <td>
+                    {
+                      complaint.title
+                    }
+                  </td>
+
+                  <td>
+                    <StatusBadge
+                      status={
+                        complaint.status
+                      }
+                    />
+                  </td>
+
+                  <td>
+                    <Link
+                      to={`/employee/complaints/${complaint._id}`}
+                    >
+                      View
+                    </Link>
+                  </td>
+                </tr>
+              )
+            )}
+
+          </tbody>
+
+        </table>
+
       </div>
+
     </EmployeeLayout>
   );
 }

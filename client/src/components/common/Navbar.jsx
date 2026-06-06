@@ -1,10 +1,11 @@
-import useAuth from "../../hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const { user } =
+    useAuth();
 
   return (
-    <header className="bg-white border-b h-16 flex items-center justify-between px-6">
+    <header className="h-16 bg-white border-b flex items-center justify-between px-6">
 
       <h2 className="font-semibold">
         Workplace Issue Tracking System

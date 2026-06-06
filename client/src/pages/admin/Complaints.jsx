@@ -1,63 +1,197 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
-import AdminLayout from "../../layouts/AdminLayout";
+import AdminLayout from "@/layouts/AdminLayout";
 
-import { getAllComplaints } from "../../services/adminService";
+import {
+  getAllComplaints,
+  updateComplaintStatus,
+  updateComplaintRemarks,
+} from "@/services/adminService";
+
+import StatusBadge from "@/components/complaints/StatusBadge";
 
 export default function Complaints() {
-  const loadComplaints = async () => {
-    try {
-      const data = await getAllComplaints();
+  const [complaints,
+    setComplaints] =
+    useState([]);
 
-      setComplaints(data.complaints || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const [complaints, setComplaints] = useState([]);
+  const [remarks,
+    setRemarks] =
+    useState({});
 
   useEffect(() => {
     loadComplaints();
   }, []);
 
+  const loadComplaints =
+    async () => {
+      const data =
+        await getAllComplaints();
+
+      setComplaints(
+        data.complaints
+      );
+    };
+
+  const handleStatus =
+    async (
+      complaintId,
+      status
+    ) => {
+      await updateComplaintStatus(
+        complaintId,
+        status
+      );
+
+      loadComplaints();
+    };
+
+  const handleRemarks =
+    async (
+      complaintId
+    ) => {
+      await updateComplaintRemarks(
+        complaintId,
+        remarks[
+          complaintId
+        ]
+      );
+
+      loadComplaints();
+    };
+
   return (
     <AdminLayout>
-      <h1 className="text-3xl font-bold mb-6">All Complaints</h1>
 
-      <div className="bg-white border rounded-xl overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-slate-50">
-            <tr>
-              <th className="p-4 text-left">Employee</th>
+      <h1 className="text-3xl font-bold mb-6">
+        All Complaints
+      </h1>
 
-              <th className="p-4 text-left">Title</th>
+      <div className="space-y-6">
 
-              <th className="p-4 text-left">Category</th>
+        {complaints.map(
+          (complaint) => (
+            <div
+              key={
+                complaint._id
+              }
+              className="bg-white border rounded-xl p-6"
+            >
+              <h2 className="font-bold text-xl">
+                {
+                  complaint.title
+                }
+              </h2>
 
-              <th className="p-4 text-left">Priority</th>
+              <p className="text-slate-500 mt-2">
+                {
+                  complaint.description
+                }
+              </p>
 
-              <th className="p-4 text-left">Status</th>
-            </tr>
-          </thead>
+              <div className="mt-4 flex gap-4">
 
-          <tbody>
-            {complaints.map((complaint) => (
-              <tr key={complaint._id} className="border-t">
-                <td className="p-4">{complaint.createdBy?.name}</td>
+                <StatusBadge
+                  status={
+                    complaint.status
+                  }
+                />
 
-                <td className="p-4">{complaint.title}</td>
+                <span>
+                  {
+                    complaint.category
+                  }
+                </span>
 
-                <td className="p-4">{complaint.category}</td>
+                <span>
+                  {
+                    complaint.priority
+                  }
+                </span>
 
-                <td className="p-4">{complaint.priority}</td>
+              </div>
 
-                <td className="p-4">{complaint.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              <div className="mt-4">
+
+                <select
+                  onChange={(e) =>
+                    handleStatus(
+                      complaint._id,
+                      e.target
+                        .value
+                    )
+                  }
+                  value={
+                    complaint.status
+                  }
+                  className="border p-2 rounded"
+                >
+                  <option>
+                    Submitted
+                  </option>
+
+                  <option>
+                    Response Initiated
+                  </option>
+
+                  <option>
+                    Under Work
+                  </option>
+
+                  <option>
+                    Resolved
+                  </option>
+
+                  <option>
+                    Rejected
+                  </option>
+
+                </select>
+
+              </div>
+
+              <div className="mt-4">
+
+                <textarea
+                  placeholder="Remarks"
+                  className="w-full border p-3 rounded"
+                  defaultValue={
+                    complaint.remarks
+                  }
+                  onChange={(e) =>
+                    setRemarks({
+                      ...remarks,
+                      [
+                        complaint._id
+                      ]:
+                        e.target
+                          .value,
+                    })
+                  }
+                />
+
+                <button
+                  onClick={() =>
+                    handleRemarks(
+                      complaint._id
+                    )
+                  }
+                  className="mt-3 bg-blue-600 text-white px-4 py-2 rounded"
+                >
+                  Save Remarks
+                </button>
+
+              </div>
+
+            </div>
+          )
+        )}
+
       </div>
+
     </AdminLayout>
   );
 }
