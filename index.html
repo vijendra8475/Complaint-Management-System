@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Citizen Registration | CivicResolve</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-container-low": "#f7f3f2",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#858383",
+                        "surface-container-highest": "#e5e2e1",
+                        "outline": "#747878",
+                        "on-tertiary-fixed-variant": "#484645",
+                        "surface": "#fdf8f8",
+                        "on-primary-fixed-variant": "#474746",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#c8c6c5",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#1c1b1a",
+                        "secondary-fixed-dim": "#c8c6c6",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#313030",
+                        "surface-dim": "#ddd9d8",
+                        "secondary": "#5e5e5e",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1c1b1b",
+                        "on-secondary-container": "#646464",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#868382",
+                        "secondary-fixed": "#e4e2e2",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "tertiary-fixed-dim": "#cac6c4",
+                        "surface-container": "#f1edec",
+                        "on-tertiary-fixed": "#1c1b1a",
+                        "on-surface": "#1c1b1b",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#000000",
+                        "on-secondary-fixed-variant": "#474747",
+                        "primary-fixed": "#e5e2e1",
+                        "primary-container": "#1c1b1b",
+                        "tertiary-fixed": "#e6e2df",
+                        "surface-tint": "#5f5e5e",
+                        "inverse-on-surface": "#f4f0ef",
+                        "outline-variant": "#c4c7c7",
+                        "background": "#fdf8f8",
+                        "surface-container-high": "#ebe7e6",
+                        "on-surface-variant": "#444748",
+                        "surface-variant": "#e5e2e1",
+                        "secondary-container": "#e4e2e2",
+                        "on-error": "#ffffff",
+                        "primary": "#000000",
+                        "surface-bright": "#fdf8f8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "1rem",
+                        "container-max": "1440px",
+                        "margin-desktop": "2rem",
+                        "stack-lg": "2rem",
+                        "stack-sm": "0.5rem",
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem",
+                        "stack-xs": "0.25rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdf8f8;
+            color: #1c1b1b;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .form-shadow {
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.03), 0px 1px 2px rgba(0, 0, 0, 0.06);
+        }
+        .floating-label-input:focus-within label {
+            transform: translateY(-20px) scale(0.85);
+            color: #000000;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- Top Navigation (Simplified for Transactional Page) -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="text-headline-md font-headline-md font-extrabold text-primary">CivicResolve</span>
+<span class="px-2 py-0.5 bg-surface-container-high rounded text-label-md font-label-md uppercase tracking-wider text-on-surface-variant">Portal</span>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center py-stack-lg px-margin-mobile">
+<div class="w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Left Branding Side (Desktop Only) -->
+<div class="hidden lg:flex lg:col-span-5 flex-col gap-stack-md pr-12">
+<h1 class="font-display-lg text-display-lg text-primary max-w-md">Join your digital municipality.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-sm">
+                    Access local government services, report issues, and participate in civic decisions through a single, secure gateway.
+                </p>
+<div class="mt-8 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary font-bold">Secure Verification</p>
+<p class="font-body-md text-body-md text-on-surface-variant">State-grade encryption for your data.</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="speed">speed</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary font-bold">Fast Processing</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Skip the lines with 24/7 digital access.</p>
+</div>
+</div>
+</div>
+<div class="mt-12 overflow-hidden rounded-[16px] h-64 w-full relative">
+<img alt="Modern architecture" class="object-cover w-full h-full grayscale brightness-90" data-alt="A clean, minimalist architectural photograph of a modern government building interior with vast glass walls and neutral concrete pillars. The lighting is high-key and soft, creating a bright and transparent atmosphere. The composition is structured and architectural, utilizing a monochrome palette of whites and grays to convey a sense of objective reliability and administrative speed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbzTP4C4UHN08yZW-_VZfjrkiaVkbhnvwdQ5Tzj7kmwE5y4MzqTU67t4GYofHlMgw86aNC_xiyiFlSJJApq0eD6Xvg6n3McHm1uOtak2phpgWdYDJp-QHIzC7TzfviaDSoYtRvjFCvENF_dOjN8fcqQVf3FbC9G3nT2056I52vSDvy1Y7KfPP1msA7a7c4YKMwPFtRsZzHEUuVgNRCY673x02aVHSqlXzyMm9ZmZsQ97HWNfVTCnUTJZnVuovrYxEuBEXMcIMPSXiA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+</div>
+</div>
+<!-- Right Registration Form -->
+<div class="lg:col-span-7 flex justify-center lg:justify-start">
+<div class="w-full max-w-[520px] bg-surface-container-lowest rounded-[16px] p-8 md:p-12 form-shadow border border-outline-variant/30">
+<div class="mb-8">
+<h2 class="font-headline-lg text-headline-lg text-primary">Create Account</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Enter your details to register for CivicResolve.</p>
+</div>
+<form action="#" class="space-y-6" id="registrationForm" method="POST">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Full Name -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide" for="fullName">Full Name</label>
+<input class="w-full h-12 px-4 rounded-lg bg-white border border-outline-variant focus:border-primary focus:ring-0 transition-all outline-none text-body-md" id="fullName" name="fullName" placeholder="Jane Doe" required="" type="text"/>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide" for="email">Email Address</label>
+<input class="w-full h-12 px-4 rounded-lg bg-white border border-outline-variant focus:border-primary focus:ring-0 transition-all outline-none text-body-md" id="email" name="email" placeholder="jane@example.gov" required="" type="email"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Phone -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide" for="phone">Phone Number</label>
+<input class="w-full h-12 px-4 rounded-lg bg-white border border-outline-variant focus:border-primary focus:ring-0 transition-all outline-none text-body-md" id="phone" name="phone" placeholder="+1 (555) 000-0000" required="" type="tel"/>
+</div>
+<!-- Address -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide" for="address">Home Address</label>
+<input class="w-full h-12 px-4 rounded-lg bg-white border border-outline-variant focus:border-primary focus:ring-0 transition-all outline-none text-body-md" id="address" name="address" placeholder="123 Civic Plaza" required="" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Password -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide" for="password">Password</label>
+<div class="relative">
+<input class="w-full h-12 px-4 rounded-lg bg-white border border-outline-variant focus:border-primary focus:ring-0 transition-all outline-none text-body-md" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary" onclick="togglePassword('password')" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wide" for="confirmPassword">Confirm Password</label>
+<div class="relative">
+<input class="w-full h-12 px-4 rounded-lg bg-white border border-outline-variant focus:border-primary focus:ring-0 transition-all outline-none text-body-md" id="confirmPassword" name="confirmPassword" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary" onclick="togglePassword('confirmPassword')" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex items-start gap-3 pt-2">
+<input class="mt-1 rounded border-outline-variant text-primary focus:ring-0" id="terms" name="terms" required="" type="checkbox"/>
+<label class="text-body-md text-on-surface-variant" for="terms">
+                                I agree to the <a class="text-primary font-semibold hover:underline" href="#">Terms of Service</a> and <a class="text-primary font-semibold hover:underline" href="#">Privacy Policy</a> of CivicResolve.
+                            </label>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary font-headline-md text-headline-md rounded-lg hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+<span>Create Account</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<div class="text-center pt-4 border-t border-outline-variant/30">
+<p class="text-body-md text-on-surface-variant">
+                                Already have account? 
+                                <a class="text-primary font-bold hover:underline ml-1" href="#">Login</a>
+</p>
+</div>
+</form>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 px-margin-desktop bg-surface border-t border-outline-variant mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-label-md font-label-md text-on-surface-variant">
+<div class="flex gap-6">
+<span>© 2024 CivicResolve GovTech</span>
+<a class="hover:text-primary transition-colors" href="#">Accessibility</a>
+<a class="hover:text-primary transition-colors" href="#">Data Privacy</a>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="language">language</span>
+<span>Language: English (US)</span>
+</div>
+</div>
+</footer>
+<script>
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = input.nextElementSibling.querySelector('.material-symbols-outlined');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerText = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.innerText = 'visibility';
+            }
+        }
+
+        // Micro-interaction for form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span> Processing...';
+            
+            setTimeout(() => {
+                alert('Account processing simulated. In a live environment, this would redirect to verification.');
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }, 1500);
+        });
+    </script>
+</body></html>
