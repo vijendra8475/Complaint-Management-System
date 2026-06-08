@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Submit Complaint | CivicResolve</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-container-low": "#f7f3f2",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#858383",
+                        "surface-container-highest": "#e5e2e1",
+                        "outline": "#747878",
+                        "on-tertiary-fixed-variant": "#484645",
+                        "surface": "#fdf8f8",
+                        "on-primary-fixed-variant": "#474746",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#c8c6c5",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#1c1b1a",
+                        "secondary-fixed-dim": "#c8c6c6",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#313030",
+                        "surface-dim": "#ddd9d8",
+                        "secondary": "#5e5e5e",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1c1b1b",
+                        "on-secondary-container": "#646464",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#868382",
+                        "secondary-fixed": "#e4e2e2",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "tertiary-fixed-dim": "#cac6c4",
+                        "surface-container": "#f1edec",
+                        "on-tertiary-fixed": "#1c1b1a",
+                        "on-surface": "#1c1b1b",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#000000",
+                        "on-secondary-fixed-variant": "#474747",
+                        "primary-fixed": "#e5e2e1",
+                        "primary-container": "#1c1b1b",
+                        "tertiary-fixed": "#e6e2df",
+                        "surface-tint": "#5f5e5e",
+                        "inverse-on-surface": "#f4f0ef",
+                        "outline-variant": "#c4c7c7",
+                        "background": "#fdf8f8",
+                        "surface-container-high": "#ebe7e6",
+                        "on-surface-variant": "#444748",
+                        "surface-variant": "#e5e2e1",
+                        "secondary-container": "#e4e2e2",
+                        "on-error": "#ffffff",
+                        "primary": "#000000",
+                        "surface-bright": "#fdf8f8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "1rem",
+                        "container-max": "1440px",
+                        "margin-desktop": "2rem",
+                        "stack-lg": "2rem",
+                        "stack-sm": "0.5rem",
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem",
+                        "stack-xs": "0.25rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e5e2e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface antialiased">
+    <!-- Sidebar Navigation -->
+    <aside
+        class="fixed left-0 top-0 h-full w-[280px] bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline flex flex-col py-stack-lg z-50 hidden md:flex">
+        <div class="px-6 mb-10">
+            <h1 class="text-headline-lg font-headline-lg font-black text-primary dark:text-on-primary-fixed">
+                CivicResolve</h1>
+            <p class="text-label-md font-label-md text-on-surface-variant">GovTech Portal</p>
+        </div>
+        <nav class="flex-1 px-4 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-all"
+                href="#">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-label-md font-label-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-surface-container dark:bg-surface-container-highest text-primary dark:text-on-surface border-l-4 border-primary font-semibold translate-x-1 transition-transform duration-200"
+                href="#">
+                <span class="material-symbols-outlined">add_box</span>
+                <span class="text-label-md font-label-md">New Complaint</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-all"
+                href="#">
+                <span class="material-symbols-outlined">list_alt</span>
+                <span class="text-label-md font-label-md">My Complaints</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-all"
+                href="#">
+                <span class="material-symbols-outlined">insights</span>
+                <span class="text-label-md font-label-md">Analytics</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-all"
+                href="#">
+                <span class="material-symbols-outlined">description</span>
+                <span class="text-label-md font-label-md">Reports</span>
+            </a>
+        </nav>
+        <div class="mt-auto px-4 pt-6 space-y-1 border-t border-outline-variant">
+            <div class="px-4 py-3 mb-4 bg-error-container/20 rounded-lg flex items-center gap-3">
+                <span class="material-symbols-outlined text-error">emergency</span>
+                <span class="text-label-md font-label-md text-error font-bold">Emergency Hotline</span>
+            </div>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-all"
+                href="#">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="text-label-md font-label-md">Settings</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low transition-all"
+                href="#">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="text-label-md font-label-md">Logout</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Content Shell -->
+    <main class="md:ml-[280px] min-h-screen flex flex-col">
+        <!-- Top App Bar -->
+        <header
+            class="h-16 flex justify-between items-center w-full px-margin-desktop bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline sticky top-0 z-40">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="relative w-full max-w-md">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                    <input
+                        class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-md focus:ring-1 focus:ring-primary"
+                        placeholder="Search case files..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button
+                    class="p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-lowest transition-colors rounded-full relative">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+                </button>
+                <button
+                    class="p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-lowest transition-colors rounded-full">
+                    <span class="material-symbols-outlined">help_outline</span>
+                </button>
+                <div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+                    <img alt="Administrator Avatar" class="w-full h-full object-cover"
+                        data-alt="A professional studio portrait of a senior government official with a neutral expression, wearing a tailored charcoal suit against a clean, light grey studio background. The lighting is soft and corporate, embodying a modern light-mode SaaS aesthetic with high clarity and professional polish."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEK-pJVHyWD1TmIrwHhkLrm1aUknXQXEGVvAfjVpX735EVui54Z6oN8cQKc6dELDK4IYgx70KfW5X4CtHMlIpG2wX6dSKUIviq8lqnoU0vXII7qfL85ytvP0MWv8SDJ7nmhk_5hLhPBStr33dqNFGCHx154GOu3X_aYkzTc5tvDT2RHLmBvTLiGPvBSzJ5TGFnyhCyEx3XEq-mbdCvAuNfOaKDBsdaojR5d2zoe5HwjDJDDEBr6ZLvx9IX7_4H6-6MlVFj9PAW0q8m" />
+                </div>
+            </div>
+        </header>
+        <!-- Form Canvas -->
+        <div class="flex-1 p-margin-desktop bg-background overflow-y-auto custom-scrollbar">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-gutter">
+                <!-- Left: Multi-Section Form -->
+                <div class="flex-1 space-y-stack-lg">
+                    <div class="mb-stack-lg">
+                        <h2 class="text-display-lg font-display-lg text-primary">New Service Complaint</h2>
+                        <p class="text-body-lg text-on-surface-variant mt-1">Please provide comprehensive details
+                            regarding your grievance for efficient resolution.</p>
+                    </div>
+                    <!-- Basic Details -->
+                    <section
+                        class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-[0px_4px_12px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0px_6px_16px_rgba(0,0,0,0.05)]">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="p-2 bg-primary text-on-primary rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: 'FILL' 1;">info</span>
+                            </span>
+                            <h3 class="text-headline-md font-headline-md">Basic Details</h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="md:col-span-2 space-y-2">
+                                <label class="text-label-md font-label-md text-on-surface">Complaint Title</label>
+                                <input
+                                    class="w-full px-4 py-3 bg-surface border border-outline-variant rounded-lg focus:border-primary focus:ring-0 transition-colors text-body-md"
+                                    id="form-title" placeholder="e.g. Chronic Water Shortage in Sector 4" type="text" />
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-label-md font-label-md text-on-surface">Department</label>
+                                <select
+                                    class="w-full px-4 py-3 bg-surface border border-outline-variant rounded-lg focus:border-primary focus:ring-0 transition-colors text-body-md"
+                                    id="form-dept">
+                                    <option disabled="" selected="" value="">Select Department</option>
+                                    <option>Public Works</option>
+                                    <option>Water &amp; Sanitation</option>
+                                    <option>Electric Supply</option>
+                                    <option>Road Safety</option>
+                                    <option>Urban Development</option>
+                                </select>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-label-md font-label-md text-on-surface">Category</label>
+                                <select
+                                    class="w-full px-4 py-3 bg-surface border border-outline-variant rounded-lg focus:border-primary focus:ring-0 transition-colors text-body-md"
+                                    id="form-category">
+                                    <option disabled="" selected="" value="">Select Category</option>
+                                    <option>Infrastructure Failure</option>
+                                    <option>Corruption/Malpractice</option>
+                                    <option>Service Delay</option>
+                                    <option>Environmental Hazard</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Description -->
+                    <section
+                        class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-[0px_4px_12px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0px_6px_16px_rgba(0,0,0,0.05)]">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="p-2 bg-primary text-on-primary rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: 'FILL' 1;">description</span>
+                            </span>
+                            <h3 class="text-headline-md font-headline-md">Detailed Description</h3>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-label-md font-label-md text-on-surface">Describe the issue in
+                                detail</label>
+                            <textarea
+                                class="w-full px-4 py-3 bg-surface border border-outline-variant rounded-lg focus:border-primary focus:ring-0 transition-colors text-body-md resize-none"
+                                id="form-desc"
+                                placeholder="Provide context, dates, and any previous attempts at resolution..."
+                                rows="5"></textarea>
+                        </div>
+                    </section>
+                    <!-- Location -->
+                    <section
+                        class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-[0px_4px_12px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0px_6px_16px_rgba(0,0,0,0.05)]">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="p-2 bg-primary text-on-primary rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: 'FILL' 1;">location_on</span>
+                            </span>
+                            <h3 class="text-headline-md font-headline-md">Incident Location</h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-label-md font-label-md text-on-surface">State/Region</label>
+                                <input
+                                    class="w-full px-4 py-3 bg-surface border border-outline-variant rounded-lg focus:border-primary focus:ring-0 transition-colors text-body-md"
+                                    id="form-state" placeholder="State" type="text" />
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-label-md font-label-md text-on-surface">District</label>
+                                <input
+                                    class="w-full px-4 py-3 bg-surface border border-outline-variant rounded-lg focus:border-primary focus:ring-0 transition-colors text-body-md"
+                                    id="form-district" placeholder="District" type="text" />
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-label-md font-label-md text-on-surface">Village/Locality</label>
+                                <input
+                                    class="w-full px-4 py-3 bg-surface border border-outline-variant rounded-lg focus:border-primary focus:ring-0 transition-colors text-body-md"
+                                    id="form-village" placeholder="Locality" type="text" />
+                            </div>
+                        </div>
+                        <div class="mt-6 h-40 w-full rounded-lg overflow-hidden relative border border-outline-variant">
+                            <img class="w-full h-full object-cover"
+                                data-alt="A clean, minimalist satellite-style map rendering of an urban grid system. The map uses a monochrome palette with shades of cool greys and blacks, highlighting transit lines in a subtle neon accent. It embodies a professional GIS data visualization aesthetic for government dashboards."
+                                data-location="Metropolitan Area"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx79Qb6P4Cyw6aqOrwLTumGZ-D4y2ULniwuVi70HV573DINMFRVAyyPm_tNNgQDD6R_eZETqMDBntYPZ5rqOpwJA1VYI1NK68GpGcGrDUUff_f6OHVAVR26vEgpdH8icrDv4lJIgsutWh4yDR3y8Fn54XPZiLYT12NJk4ddq3iN7mT2vbtrzA3vnHXxtipq4gbo3z1QRwFmC5pyAvJ4EnRabVzG7q6B9v1XhdDk9EtgbSK26e2Q1e_1iXqcnWoWQ7At4PLtNg8joB_" />
+                            <div
+                                class="absolute inset-0 bg-primary/10 flex items-center justify-center pointer-events-none">
+                                <span
+                                    class="px-4 py-2 bg-surface text-label-md rounded-full shadow-md border border-outline-variant">Interactive
+                                    Map Loading...</span>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Evidence & Priority -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+                        <section
+                            class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-[0px_4px_12px_rgba(0,0,0,0.03)]">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="p-2 bg-primary text-on-primary rounded-lg flex items-center justify-center">
+                                    <span class="material-symbols-outlined"
+                                        style="font-variation-settings: 'FILL' 1;">attach_file</span>
+                                </span>
+                                <h3 class="text-headline-md font-headline-md">Evidence Upload</h3>
+                            </div>
+                            <div
+                                class="border-2 border-dashed border-outline-variant rounded-xl p-8 text-center hover:border-primary/50 transition-all cursor-pointer group">
+                                <span
+                                    class="material-symbols-outlined text-4xl text-on-surface-variant group-hover:text-primary mb-2">cloud_upload</span>
+                                <p class="text-body-md text-on-surface">Click to upload or drag and drop</p>
+                                <p class="text-label-md text-on-surface-variant mt-1">PNG, JPG, PDF (max. 10MB)</p>
+                            </div>
+                        </section>
+                        <section
+                            class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-[0px_4px_12px_rgba(0,0,0,0.03)]">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="p-2 bg-primary text-on-primary rounded-lg flex items-center justify-center">
+                                    <span class="material-symbols-outlined"
+                                        style="font-variation-settings: 'FILL' 1;">priority_high</span>
+                                </span>
+                                <h3 class="text-headline-md font-headline-md">Priority Level</h3>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label
+                                    class="flex items-center gap-3 p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-all">
+                                    <input class="text-primary focus:ring-0" name="priority" type="radio" value="low" />
+                                    <span class="flex-1 text-body-md">Low - Routine Maintenance</span>
+                                    <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                                </label>
+                                <label
+                                    class="flex items-center gap-3 p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-all">
+                                    <input checked="" class="text-primary focus:ring-0" name="priority" type="radio"
+                                        value="med" />
+                                    <span class="flex-1 text-body-md">Medium - Service Impact</span>
+                                    <span class="w-2 h-2 rounded-full bg-primary"></span>
+                                </label>
+                                <label
+                                    class="flex items-center gap-3 p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-all">
+                                    <input class="text-primary focus:ring-0" name="priority" type="radio"
+                                        value="high" />
+                                    <span class="flex-1 text-body-md font-bold">High - Immediate Action</span>
+                                    <span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <!-- Actions -->
+                    <div class="flex items-center justify-end gap-4 py-8">
+                        <button
+                            class="px-8 py-3 border border-outline-variant bg-surface-container-lowest text-primary font-semibold rounded-lg hover:bg-surface-container-low transition-all">
+                            Save Draft
+                        </button>
+                        <button
+                            class="px-8 py-3 bg-primary text-on-primary font-semibold rounded-lg hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
+                            Submit Complaint
+                        </button>
+                    </div>
+                </div>
+                <!-- Right: Preview Card -->
+                <aside class="w-full lg:w-[380px] space-y-stack-lg">
+                    <div class="sticky top-24">
+                        <div class="bg-primary text-on-primary rounded-t-xl p-6">
+                            <h4 class="text-label-md font-label-md uppercase tracking-widest opacity-80">Live Preview
+                            </h4>
+                            <p class="text-headline-md font-headline-md mt-2 line-clamp-2" id="preview-title">New
+                                Grievance Draft</p>
+                        </div>
+                        <div
+                            class="bg-surface-container-lowest border-x border-b border-outline-variant rounded-b-xl p-6 space-y-6 shadow-xl">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-label-md font-label-md text-on-surface-variant">Department</p>
+                                    <p class="text-body-md font-semibold text-primary" id="preview-dept">—</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-label-md font-label-md text-on-surface-variant">Status</p>
+                                    <div class="px-2 py-1 bg-surface-container text-label-md font-bold rounded mt-1">
+                                        DRAFT</div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-on-surface-variant text-lg">category</span>
+                                    <p class="text-body-md text-on-surface" id="preview-category">—</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-on-surface-variant text-lg">location_on</span>
+                                    <p class="text-body-md text-on-surface" id="preview-location">No location set</p>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-on-surface-variant text-lg">event_available</span>
+                                    <p class="text-body-md text-on-surface">Created: Today, <span
+                                            id="current-time">12:00 PM</span></p>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t border-outline-variant">
+                                <p class="text-label-md font-label-md text-on-surface-variant mb-3">Summary</p>
+                                <p class="text-body-md text-on-surface-variant leading-relaxed line-clamp-4 italic"
+                                    id="preview-summary">Description will appear here as you type...</p>
+                            </div>
+                            <div class="pt-4">
+                                <div class="p-4 bg-surface-container rounded-lg border border-outline-variant/50">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="text-label-md font-bold">Submission Quality</p>
+                                        <p class="text-label-md" id="quality-percent">0%</p>
+                                    </div>
+                                    <div class="w-full h-1.5 bg-surface-variant rounded-full overflow-hidden">
+                                        <div class="h-full bg-primary transition-all duration-500" id="quality-bar"
+                                            style="width: 0%"></div>
+                                    </div>
+                                    <p class="text-[10px] text-on-surface-variant mt-2">More detail leads to faster
+                                        processing.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Info Card -->
+                        <div
+                            class="mt-6 p-6 bg-surface-container-high rounded-xl border border-outline-variant/30 flex gap-4">
+                            <span class="material-symbols-outlined text-primary">verified_user</span>
+                            <div>
+                                <p class="text-label-md font-bold text-primary">SECURE SUBMISSION</p>
+                                <p class="text-body-md text-on-surface-variant text-xs mt-1">Your data is encrypted and
+                                    submitted directly to the official government grievance repository.</p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Simple reactivity for the Preview Card
+        const inputs = {
+            title: document.getElementById('form-title'),
+            dept: document.getElementById('form-dept'),
+            category: document.getElementById('form-category'),
+            desc: document.getElementById('form-desc'),
+            state: document.getElementById('form-state'),
+            district: document.getElementById('form-district'),
+            village: document.getElementById('form-village')
+        };
+
+        const previews = {
+            title: document.getElementById('preview-title'),
+            dept: document.getElementById('preview-dept'),
+            category: document.getElementById('preview-category'),
+            location: document.getElementById('preview-location'),
+            summary: document.getElementById('preview-summary'),
+            qualityBar: document.getElementById('quality-bar'),
+            qualityText: document.getElementById('quality-percent')
+        };
+
+        const updatePreview = () => {
+            previews.title.innerText = inputs.title.value || "New Grievance Draft";
+            previews.dept.innerText = inputs.dept.value || "—";
+            previews.category.innerText = inputs.category.value || "—";
+
+            const locArr = [inputs.village.value, inputs.district.value, inputs.state.value].filter(Boolean);
+            previews.location.innerText = locArr.join(', ') || "No location set";
+
+            previews.summary.innerText = inputs.desc.value || "Description will appear here as you type...";
+
+            // Calculate "Form Completion Quality"
+            let filledFields = Object.values(inputs).filter(i => i.value.length > 0).length;
+            let totalFields = Object.keys(inputs).length;
+            let progress = Math.round((filledFields / totalFields) * 100);
+
+            previews.qualityBar.style.width = progress + "%";
+            previews.qualityText.innerText = progress + "%";
+        };
+
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', updatePreview);
+            input.addEventListener('change', updatePreview);
+        });
+
+        // Set current time
+        const now = new Date();
+        document.getElementById('current-time').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Appearance interaction for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.classList.add('opacity-80'));
+            btn.addEventListener('mouseup', () => btn.classList.remove('opacity-80'));
+        });
+    </script>
+</body>
+
+</html>

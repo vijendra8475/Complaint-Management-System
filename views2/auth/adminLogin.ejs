@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>CivicResolve | Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .soft-shadow {
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.03), 0px 1px 2px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#171717",
+                        "on-primary": "#ffffff",
+                        "background": "#FFFFFF",
+                        "surface": "#FFFFFF",
+                        "surface-container": "#F5F5F5",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#E5E5E5",
+                        "outline-variant": "#E5E5E5",
+                        "on-surface": "#171717",
+                        "on-surface-variant": "#737373",
+                        "secondary": "#737373",
+                        "error": "#ef4444"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "16px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "1rem",
+                        "container-max": "1440px",
+                        "margin-desktop": "2rem",
+                        "stack-lg": "2rem",
+                        "stack-sm": "0.5rem",
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem",
+                        "stack-xs": "0.25rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-surface min-h-screen overflow-x-hidden">
+
+    <!-- <%- include('../partials/authNav') %> -->
+
+    <main class="flex min-h-screen flex-col md:flex-row">
+        <!-- Left Side: Architectural Tech Imagery Section -->
+        <section
+            class="hidden md:flex md:w-1/2 lg:w-3/5 bg-surface-container relative items-center justify-center p-stack-lg overflow-hidden border-r border-outline">
+            <!-- Minimal background pattern -->
+            <div class="absolute inset-0 opacity-[0.4]"
+                style="background-image: linear-gradient(#E5E5E5 1px, transparent 1px), linear-gradient(90deg, #E5E5E5 1px, transparent 1px); background-size: 40px 40px;">
+            </div>
+            <div class="z-10 w-full max-w-2xl text-center px-12">
+                <div class="relative mb-stack-lg inline-block">
+                    <img alt="Modern Smart City Interface"
+                        class="w-full h-auto object-cover rounded-xl grayscale shadow-2xl border border-outline"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPTMB3srxSJKTeBhq3u42kfBIcsiKDsDiV8lfcAbE3_6hqYynSpeC5iFR-hovDqUunPR_Ri50NpHHuYjLJwq818yOj71LyFJfZmzQzx4xMAxJG2qSBAl5kEhN7LNuaHP1ct8RMH_x_GQTYHeFJb8UxCTVjcXOoMr9xgPIlvynMlPy5RYQ0-pthhsUsRAN2BFaCarqHDJDJ64YA9c_Ajv48InG8_d7ldJK-FVjneSG0EKIFkafzu5JZVq48w62txoL2ZszTBgZmCYlI" />
+                    <div class="absolute inset-0 bg-primary/10 rounded-xl"></div>
+                </div>
+                <h1 class="text-display-lg font-extrabold text-primary mb-stack-sm tracking-tight">Modern Civic
+                    Resolution</h1>
+                <p class="text-body-lg text-on-surface-variant max-w-lg mx-auto leading-relaxed">
+                    Empowering citizens through transparent digital governance and administrative excellence.
+                </p>
+            </div>
+            <!-- Brand Anchor -->
+            <div class="absolute bottom-10 left-10 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-3xl font-bold"
+                    data-icon="account_balance">account_balance</span>
+                <span class="text-headline-md font-extrabold tracking-tighter text-primary">CivicResolve</span>
+            </div>
+        </section>
+        <!-- Right Side: Login Content -->
+        <section
+            class="flex-1 flex flex-col items-center justify-center p-margin-mobile md:p-margin-desktop bg-surface">
+            <!-- Mobile Brand Anchor -->
+            <div class="md:hidden flex items-center gap-2 mb-stack-lg">
+                <span class="material-symbols-outlined text-primary text-2xl"
+                    data-icon="account_balance">account_balance</span>
+                <span class="text-headline-md font-extrabold text-primary">CivicResolve</span>
+            </div>
+            <!-- Login Card -->
+            <div class="w-full max-w-[440px] bg-white p-10 rounded-xl border border-outline soft-shadow">
+                <header class="mb-8">
+                    <h2 class="text-headline-lg font-extrabold text-primary mb-2">Administrator Login</h2>
+                    <p class="text-body-md text-on-surface-variant">Access your dashboard to manage city services.</p>
+                </header>
+                <form class="space-y-6" onsubmit="event.preventDefault();">
+                    <!-- Email Field -->
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-[0.1em]"
+                            for="email">Email Address</label>
+                        <input
+                            class="w-full px-4 py-3 bg-white border border-outline rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary text-body-md transition-all placeholder:text-zinc-400"
+                            id="email" placeholder="name@agency.gov" type="email" />
+                    </div>
+                    <!-- Password Field -->
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-[0.1em]"
+                            for="password">Password</label>
+                        <input
+                            class="w-full px-4 py-3 bg-white border border-outline rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/5 focus:border-primary text-body-md transition-all placeholder:text-zinc-400"
+                            id="password" placeholder="••••••••" type="password" />
+                    </div>
+                    <!-- Options Row -->
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center gap-2 cursor-pointer group">
+                            <input class="w-4 h-4 rounded border-outline text-primary focus:ring-primary"
+                                type="checkbox" />
+                            <span
+                                class="text-label-md text-on-surface-variant group-hover:text-on-surface transition-colors">Remember
+                                me</span>
+                        </label>
+                        <a class="text-label-md font-semibold text-primary hover:underline transition-all"
+                            href="#">Forgot Password?</a>
+                    </div>
+                    <!-- Primary Action -->
+                    <button
+                        class="w-full bg-primary text-on-primary py-3.5 px-4 rounded-lg font-bold hover:bg-neutral-800 active:scale-[0.99] transition-all flex items-center justify-center gap-2">
+                        <span>Sign In</span>
+                        <span class="material-symbols-outlined text-[18px]" data-icon="login">login</span>
+                    </button>
+                    <!-- Divider -->
+                    <div class="relative flex items-center py-2">
+                        <div class="flex-grow border-t border-outline"></div>
+                        <span
+                            class="flex-shrink mx-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Or</span>
+                        <div class="flex-grow border-t border-outline"></div>
+                    </div>
+                    <!-- Social Login -->
+                    <a class="w-full py-3.5 bg-primary text-on-primary font-headline-md text-body-lg rounded-lg hover:bg-opacity-90 active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2"
+                        type="submit" href="/login">
+                        <span>User login</span>
+                        <span class="material-symbols-outlined text-[20px]">login</span>
+                    </a>
+                </form>
+
+            </div>
+            <!-- Footer Links -->
+            <footer class="mt-12 flex gap-8">
+                <a class="text-label-md font-medium text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Privacy Policy</a>
+                <a class="text-label-md font-medium text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Terms of Service</a>
+                <a class="text-label-md font-medium text-on-surface-variant hover:text-primary transition-colors"
+                    href="#">Help Center</a>
+            </footer>
+        </section>
+    </main>
+
+    <!-- <%- include('../partials/authFooter') %> -->
+    <script>
+        // Micro-interactions for inputs
+        const inputs = document.querySelectorAll('input:not([type="checkbox"])');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                const label = input.parentElement.querySelector('label');
+                if (label) label.style.color = '#171717';
+            });
+            input.addEventListener('blur', () => {
+                const label = input.parentElement.querySelector('label');
+                if (label) label.style.color = '';
+            });
+        });
+    </script>
+</body>
+
+</html>

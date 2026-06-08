@@ -1,0 +1,104 @@
+<div class="space-y-6">
+
+    <div class="flex justify-between items-center">
+
+        <div>
+            <h1 class="text-3xl font-bold">
+                My Complaints
+            </h1>
+
+            <p class="text-gray-500">
+                Track all submitted complaints
+            </p>
+        </div>
+
+        <a href="/complaints/new" class="px-4 py-2 rounded-xl bg-black text-white">
+            New Complaint
+        </a>
+
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+
+        <table class="w-full">
+
+            <thead class="bg-gray-50 border-b">
+                <tr>
+
+                    <th class="text-left p-4">
+                        Title
+                    </th>
+
+                    <th class="text-left p-4">
+                        Category
+                    </th>
+
+                    <th class="text-left p-4">
+                        Priority
+                    </th>
+
+                    <th class="text-left p-4">
+                        Status
+                    </th>
+
+                    <th class="text-left p-4">
+                        Created
+                    </th>
+
+                    <th class="text-left p-4">
+                        Action
+                    </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% complaints.forEach( complaint=> {
+                    %>
+
+                    <tr class="border-b hover:bg-gray-50">
+
+                        <td class="p-4">
+                            <%= complaint.title %>
+                        </td>
+
+                        <td class="p-4">
+                            <%= complaint.category %>
+                        </td>
+
+                        <td class="p-4">
+                            <%= complaint.priority %>
+                        </td>
+
+                        <td class="p-4">
+
+                            <span class="px-3 py-1 rounded-full text-sm bg-gray-100">
+                                <%= complaint.status %>
+                            </span>
+
+                        </td>
+
+                        <td class="p-4">
+                            <%= complaint.createdAt.toLocaleDateString() %>
+                        </td>
+
+                        <td class="p-4">
+
+                            <a href="/complaints/<%= complaint._id %>" class="text-blue-600">
+                                View
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    <% }) %>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

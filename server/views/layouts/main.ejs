@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- <title><%= title %></title> -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+  <%- include('../partials/sidebar') %>
+
+  <div class="ml-64">
+
+    <%- include('../partials/navbar') %>
+
+    <main class="p-6">
+      <%- body %>
+    </main>
+
+  </div>
+
+</body>
+</html>

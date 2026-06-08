@@ -1,0 +1,176 @@
+<div class="space-y-6">
+
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+
+        <h2 class="text-xl font-semibold mb-4">
+            Complaint Information
+        </h2>
+
+        <div class="space-y-4">
+
+            <div>
+                <p class="text-gray-500">
+                    Title
+                </p>
+
+                <p class="font-medium">
+                    <%= complaint.title %>
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">
+                    Description
+                </p>
+
+                <p>
+                    <%= complaint.description %>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+
+        <h2 class="text-xl font-semibold mb-4">
+            Employee Information
+        </h2>
+
+        <div class="grid grid-cols-2 gap-4">
+
+            <div>
+                <p class="text-gray-500">
+                    Name
+                </p>
+
+                <p>
+                    <%= employee.name %>
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">
+                    Employee ID
+                </p>
+
+                <p>
+                    <%= employee.employeeId %>
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">
+                    Email
+                </p>
+
+                <p>
+                    <%= employee.email %>
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">
+                    Department
+                </p>
+
+                <p>
+                    <%= employee.department %>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+
+        <h2 class="text-xl font-semibold mb-4">
+            AI Analysis
+        </h2>
+
+        <div class="grid grid-cols-2 gap-4">
+
+            <div>
+                <p class="text-gray-500">
+                    Category
+                </p>
+
+                <p>
+                    <%= complaint.category %>
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">
+                    Priority
+                </p>
+
+                <p>
+                    <%= complaint.priority %>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-2xl p-6 shadow-sm">
+
+        <h2 class="text-xl font-semibold mb-4">
+            Complaint Management
+        </h2>
+
+        <form>
+
+            <div class="mb-4">
+
+                <label class="block mb-2">
+                    Status
+                </label>
+
+                <select class="w-full border rounded-xl p-3">
+                    <option>
+                        Submitted
+                    </option>
+
+                    <option>
+                        Response Initiated
+                    </option>
+
+                    <option>
+                        Under Work
+                    </option>
+
+                    <option>
+                        Resolved
+                    </option>
+
+                    <option>
+                        Rejected
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="mb-6">
+
+                <label class="block mb-2">
+                    Remarks
+                </label>
+
+                <textarea rows="5" class="w-full border rounded-xl p-3"><%= complaint.remarks %></textarea>
+
+            </div>
+
+            <button class="bg-black text-white px-6 py-3 rounded-xl">
+                Update Complaint
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

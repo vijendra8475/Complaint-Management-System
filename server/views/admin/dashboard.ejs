@@ -1,0 +1,59 @@
+<div class="space-y-8">
+
+  <div>
+    <h1 class="text-3xl font-bold">
+      Admin Dashboard
+    </h1>
+
+    <p class="text-gray-500">
+      Overview of workplace issues
+    </p>
+  </div>
+
+  <div
+    class="grid grid-cols-1 md:grid-cols-4 gap-6"
+  >
+
+    <div
+      class="bg-white rounded-2xl p-6 shadow-sm"
+    >
+      <h3>Total Complaints</h3>
+
+      <p class="text-3xl font-bold mt-2">
+        <%= stats.total %>
+      </p>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl p-6 shadow-sm"
+    >
+      <h3>Pending</h3>
+
+      <p class="text-3xl font-bold mt-2">
+        <%= stats.pending %>
+      </p>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl p-6 shadow-sm"
+    >
+      <h3>Resolved</h3>
+
+      <p class="text-3xl font-bold mt-2">
+        <%= stats.resolved %>
+      </p>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl p-6 shadow-sm"
+    >
+      <h3>Rejected</h3>
+
+      <p class="text-3xl font-bold mt-2">
+        <%= stats.rejected %>
+      </p>
+    </div>
+
+  </div>
+
+</div>

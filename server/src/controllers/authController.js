@@ -1,18 +1,14 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+import { setUser, setUserDetails } from "../app.js";
+
+let role = "";
 
 export const registerUser = async (req, res) => {
   try {
-    const {
-      employeeId,
-      name,
-      email,
-      password,
-      department,
-      designation,
-      role,
-    } = req.body;
+    const { employeeId, name, email, password, department, designation, role } =
+      req.body;
 
     if (!employeeId || !name || !email || !password) {
       return res.status(400).json({
@@ -22,10 +18,7 @@ export const registerUser = async (req, res) => {
     }
 
     const existingUser = await User.findOne({
-      $or: [
-        { email },
-        { employeeId }
-      ]
+      $or: [{ email }, { employeeId }],
     });
 
     if (existingUser) {
@@ -37,10 +30,7 @@ export const registerUser = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
 
-    const hashedPassword = await bcrypt.hash(
-      password,
-      salt
-    );
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = await User.create({
       employeeId,
@@ -65,7 +55,6 @@ export const registerUser = async (req, res) => {
         role: user.role,
       },
     });
-
   } catch (error) {
     console.error(error);
 
@@ -77,10 +66,11 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
+  console.log(req.body);
+
   try {
     const { email, password } = req.body;
-    console.log({ email, password});
-    
+    console.log({ email, password });
 
     if (!email || !password) {
       return res.status(400).json({
@@ -91,9 +81,6 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    console.log(email);
-    
-
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -101,10 +88,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
       return res.status(401).json({
@@ -115,7 +99,8 @@ export const loginUser = async (req, res) => {
 
     const token = generateToken(user._id);
 
-    res.status(200).json({
+    setUser(user.role);
+    setUserDetails({
       success: true,
       token,
       user: {
@@ -127,6 +112,8 @@ export const loginUser = async (req, res) => {
       },
     });
 
+    // localStorage.setItem(user);
+    res.redirect('/dashboard')
   } catch (error) {
     console.error(error);
 
