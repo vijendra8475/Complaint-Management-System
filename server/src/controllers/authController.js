@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
-import { setUser, setUserDetails } from "../app.js";
 
 let role = "";
 
@@ -99,8 +98,7 @@ export const loginUser = async (req, res) => {
 
     const token = generateToken(user._id);
 
-    setUser(user.role);
-    setUserDetails({
+    res.status(200).json({
       success: true,
       token,
       user: {
@@ -111,9 +109,6 @@ export const loginUser = async (req, res) => {
         role: user.role,
       },
     });
-
-    // localStorage.setItem(user);
-    res.redirect('/dashboard')
   } catch (error) {
     console.error(error);
 
