@@ -6,18 +6,28 @@
   </div>
 
   <nav class="px-4 space-y-2">
-    <a href="/dashboard" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
-      Dashboard
-    </a>
-    <a href="/admin/dashboard" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
+
+    <% if (user?.role === "admin") { %>
+
+          <a href="/admin/dashboard" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
       Admin Dashboard
     </a>
     <a href="/admin/analytics" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
       Analytics
     </a>
+    <a href="/admin/complaints" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
+      Complaints
+    </a>
     <a href="/admin/employees" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
       Employees
     </a>
+    
+
+<% } %>
+    <a href="/dashboard" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
+      Dashboard
+    </a>
+
 
     <a href="/complaints" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
       My Complaints
@@ -29,6 +39,10 @@
 
     <a href="/profile" class="block rounded-lg px-4 py-2 hover:bg-gray-100">
       Profile
+    </a>
+
+    <a href="/logout">
+      Logout
     </a>
   </nav>
 </aside>

@@ -26,13 +26,30 @@ app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
-  })
+  }),
 );
 
+app.use(express.static(path.join(__dirname, "../public")));
+
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
 app.use(
-  express.static(
-    path.join(__dirname, "../public")
-  )
+  session({
+    secret: process.env.JWT_SECRET,
+
+    resave: false,
+
+    saveUninitialized: false,
+
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+    }),
+
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  }),
 );
 
 /* -------------------- */
@@ -41,26 +58,19 @@ app.use(
 
 app.set("view engine", "ejs");
 
-app.set(
-  "views",
-  path.join(__dirname, "../views")
-);
+app.set("views", path.join(__dirname, "../views"));
 
 app.use(expressLayouts);
 
-app.set(
-  "layout",
-  "./layouts/main"
-);
+app.set("layout", "./layouts/main");
 
 /* -------------------- */
 /* Global Template Data */
 /* -------------------- */
 
 app.use((req, res, next) => {
-  res.locals.user = {
-    name: "Vijendra",
-  };
+  res.locals.user =
+    req.session.user || null;
 
   next();
 });
@@ -71,20 +81,11 @@ app.use((req, res, next) => {
 
 app.use("/api/auth", authRoutes);
 
-app.use(
-  "/api/complaints",
-  complaintRoutes
-);
+app.use("/api/complaints", complaintRoutes);
 
-app.use(
-  "/api/admin/analytics",
-  analyticsRoutes
-);
+app.use("/api/admin/analytics", analyticsRoutes);
 
-app.use(
-  "/api/admin",
-  adminRoutes
-);
+app.use("/api/admin", adminRoutes);
 
 /* -------------------- */
 /* View Routes */

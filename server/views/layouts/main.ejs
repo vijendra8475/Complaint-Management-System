@@ -9,17 +9,23 @@
 
 <body class="bg-gray-100">
 
+ <% if (typeof hideLayout === 'undefined' || !hideLayout) { %>
+
   <%- include('../partials/sidebar') %>
 
   <div class="ml-64">
-
     <%- include('../partials/navbar') %>
 
     <main class="p-6">
       <%- body %>
     </main>
-
   </div>
+
+<% } else { %>
+
+  <%- body %>
+
+<% } %>
 
 </body>
 </html>

@@ -122,7 +122,7 @@
             Complaint Management
         </h2>
 
-        <form>
+        <form action="/admin/complaints/<%= complaint._id %>/update" method="POST">
 
             <div class="mb-4">
 
@@ -130,7 +130,7 @@
                     Status
                 </label>
 
-                <select class="w-full border rounded-xl p-3">
+                <select name="status" class="w-full border rounded-xl p-3">
                     <option>
                         Submitted
                     </option>
@@ -161,13 +161,17 @@
                     Remarks
                 </label>
 
-                <textarea rows="5" class="w-full border rounded-xl p-3"><%= complaint.remarks %></textarea>
-
+                <textarea name="remarks" rows="5" class="w-full border rounded-xl p-3">
+                    <%= complaint.remarks || "" %>
+                </textarea>
             </div>
 
-            <button class="bg-black text-white px-6 py-3 rounded-xl">
-                Update Complaint
-            </button>
+            <button
+  type="submit"
+  class="bg-black text-white px-6 py-3 rounded-xl"
+>
+  Update Complaint
+</button>
 
         </form>
 

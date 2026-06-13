@@ -3,13 +3,9 @@ import express from "express";
 import Complaint from "../models/Complaint.js";
 import User from "../models/User.js";
 
-import {
-  predictCategory,
-} from "../ai/categoryPredictor.js";
+import { predictCategory } from "../ai/categoryPredictor.js";
 
-import {
-  predictPriority,
-} from "../ai/priorityPredictor.js";
+import { predictPriority } from "../ai/priorityPredictor.js";
 
 const router = express.Router();
 
@@ -27,7 +23,7 @@ router.get("/", (req, res) => {
    EMPLOYEE DASHBOARD
 ========================================= */
 
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", viewAuth, (req, res) => {
   res.render("employee/dashboard", {
     title: "Dashboard",
   });
@@ -37,33 +33,23 @@ router.get("/dashboard", (req, res) => {
    MY COMPLAINTS
 ========================================= */
 
-router.get("/complaints", async (req, res) => {
+router.get("/complaints", viewAuth, async (req, res) => {
   try {
-    const user = await User.findOne({
-      email: "vijendra@example.com",
+    const complaints = await Complaint.find({
+      createdBy: req.session.user._id,
+    }).sort({
+      createdAt: -1,
     });
 
-    const complaints =
-      await Complaint.find({
-        createdBy: user._id,
-      }).sort({
-        createdAt: -1,
-      });
+    res.render("employee/complaints", {
+      title: "My Complaints",
 
-    res.render(
-      "employee/complaints",
-      {
-        title: "My Complaints",
-        complaints,
-      }
-    );
-
+      complaints,
+    });
   } catch (error) {
-
     console.error(error);
 
     res.redirect("/dashboard");
-
   }
 });
 
@@ -71,381 +57,364 @@ router.get("/complaints", async (req, res) => {
    CREATE COMPLAINT
 ========================================= */
 
-router.get("/complaints/new", (req, res) => {
-  res.render(
-    "employee/create-complaint",
-    {
-      title:
-        "Create Complaint",
-    }
-  );
+router.get("/complaints/new", viewAuth, (req, res) => {
+  res.render("employee/create-complaint", {
+    title: "Create Complaint",
+  });
 });
 
-router.post(
-  "/complaints/new",
-  async (req, res) => {
+router.post("/complaints/new", viewAuth, async (req, res) => {
+  try {
+    const { title, description } = req.body;
 
-    try {
+    // Uncomment later
 
-      const {
-        title,
-        description,
-      } = req.body;
+    const predictedCategory = await predictCategory(title, description);
 
-      const demoUser =
-        await User.findOne({
-          email:
-            "vijendra@example.com",
-        });
+    const priority = await predictPriority(title, description);
 
-      // Enable these later
+    await Complaint.create({
+      title,
+      description,
 
-      // const predictedCategory =
-      //   await predictCategory(
-      //     title,
-      //     description
-      //   );
+      category: predictedCategory,
 
-      // const priority =
-      //   await predictPriority(
-      //     title,
-      //     description
-      //   );
+      predictedCategory,
 
-      const predictedCategory =
-        "Network & Internet";
+      priority,
 
-      const priority =
-        "Medium";
+      createdBy: req.session.user._id,
+    });
 
-      await Complaint.create({
-        title,
-        description,
+    res.redirect("/complaints");
+  } catch (error) {
+    console.error(error);
 
-        category:
-          predictedCategory,
-
-        predictedCategory,
-
-        priority,
-
-        createdBy:
-          demoUser._id,
-      });
-
-      res.redirect(
-        "/complaints"
-      );
-
-    } catch (error) {
-
-      console.error(error);
-
-      res.redirect(
-        "/complaints/new"
-      );
-
-    }
+    res.redirect("/complaints/new");
   }
-);
+});
 
 /* =========================================
    COMPLAINT DETAILS
 ========================================= */
 
-router.get(
-  "/complaints/:id",
-  (req, res) => {
+router.get("/complaints/:id", viewAuth, async (req, res) => {
+  try {
+    const complaint = await Complaint.findOne({
+      _id: req.params.id,
 
-    res.render(
-      "employee/complaint-details",
-      {
-        title:
-          "Complaint Details",
+      createdBy: req.session.user._id,
+    });
 
-        complaint: {
-          title:
-            "Office WiFi Not Working",
+    if (!complaint) {
+      return res.redirect("/complaints");
+    }
 
-          description:
-            "Internet disconnects every few minutes.",
+    res.render("employee/complaint-details", {
+      title: "Complaint Details",
 
-          category:
-            "Network & Internet",
+      complaint,
+    });
+  } catch (error) {
+    console.error(error);
 
-          priority:
-            "High",
-
-          status:
-            "Under Work",
-
-          remarks:
-            "Network team investigating.",
-
-          createdAt:
-            "2026-06-09",
-        },
-      }
-    );
-
+    res.redirect("/complaints");
   }
-);
+});
 
 /* =========================================
    PROFILE
 ========================================= */
 
-router.get("/profile", (req, res) => {
-  res.render(
-    "employee/profile",
-    {
-      title: "Profile",
+router.get("/profile", viewAuth, (req, res) => {
+  res.render("employee/profile", {
+    title: "Profile",
 
-      employee: {
-        employeeId:
-          "EMP001",
+    employee: {
+      employeeId: "EMP001",
 
-        name:
-          "Vijendra Chandra",
+      name: "Vijendra Chandra",
 
-        email:
-          "vijendra@example.com",
+      email: "vijendra@example.com",
 
-        department:
-          "Engineering",
+      department: "Engineering",
 
-        designation:
-          "Software Developer",
+      designation: "Software Developer",
 
-        role:
-          "Employee",
-      },
-    }
-  );
+      role: "Employee",
+    },
+  });
 });
 
 /* =========================================
    ADMIN DASHBOARD
 ========================================= */
 
-router.get(
-  "/admin/dashboard",
-  (req, res) => {
+router.get("/admin/dashboard", adminViewAuth, async (req, res) => {
+  try {
+    const total = await Complaint.countDocuments();
 
-    res.render(
-      "admin/dashboard",
-      {
-        title:
-          "Admin Dashboard",
+    const resolved = await Complaint.countDocuments({
+      status: "Resolved",
+    });
 
-        stats: {
-          total: 124,
-          pending: 43,
-          resolved: 72,
-          rejected: 9,
-        },
-      }
-    );
+    const rejected = await Complaint.countDocuments({
+      status: "Rejected",
+    });
 
+    const pending = await Complaint.countDocuments({
+      status: {
+        $nin: ["Resolved", "Rejected"],
+      },
+    });
+
+    res.render("admin/dashboard", {
+      title: "Admin Dashboard",
+
+      stats: {
+        total,
+        pending,
+        resolved,
+        rejected,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.redirect("/admin/complaints");
   }
-);
+});
 
 /* =========================================
    ADMIN COMPLAINTS
 ========================================= */
 
-router.get(
-  "/admin/complaints",
-  (req, res) => {
+router.get("/admin/complaints", adminViewAuth, async (req, res) => {
+  try {
+    const complaints = await Complaint.find()
+      .populate("createdBy", "name email")
+      .sort({
+        createdAt: -1,
+      });
 
-    res.render(
-      "admin/complaints",
-      {
-        title:
-          "All Complaints",
+    res.render("admin/complaints", {
+      title: "All Complaints",
 
-        complaints: [
-          {
-            _id: "1",
+      complaints,
+    });
+  } catch (error) {
+    console.error(error);
 
-            employee:
-              "Vijendra Chandra",
-
-            title:
-              "Office WiFi Not Working",
-
-            category:
-              "Network & Internet",
-
-            priority:
-              "High",
-
-            status:
-              "Under Work",
-          },
-
-          {
-            _id: "2",
-
-            employee:
-              "Rahul Sharma",
-
-            title:
-              "Salary Not Credited",
-
-            category:
-              "Payroll Issue",
-
-            priority:
-              "Critical",
-
-            status:
-              "Submitted",
-          },
-        ],
-      }
-    );
-
+    res.redirect("/admin/dashboard");
   }
-);
+});
 
 /* =========================================
    ADMIN COMPLAINT DETAILS
 ========================================= */
 
-router.get(
-  "/admin/complaints/:id",
-  (req, res) => {
-
-    res.render(
-      "admin/complaint-details",
-      {
-        title:
-          "Complaint Details",
-
-        complaint: {
-          _id: "1",
-
-          title:
-            "Office WiFi Not Working",
-
-          description:
-            "Internet disconnects every few minutes and causes productivity issues.",
-
-          category:
-            "Network & Internet",
-
-          priority:
-            "High",
-
-          status:
-            "Under Work",
-
-          remarks:
-            "Network team investigating.",
-
-          createdAt:
-            "09 Jun 2026",
-        },
-
-        employee: {
-          employeeId:
-            "EMP001",
-
-          name:
-            "Vijendra Chandra",
-
-          email:
-            "vijendra@example.com",
-
-          department:
-            "Engineering",
-        },
-      }
+router.get("/admin/complaints/:id", adminViewAuth, async (req, res) => {
+  try {
+    const complaint = await Complaint.findById(req.params.id).populate(
+      "createdBy",
+      "employeeId name email department",
     );
 
+    if (!complaint) {
+      return res.redirect("/admin/complaints");
+    }
+
+    res.render("admin/complaint-details", {
+      title: "Complaint Details",
+
+      complaint,
+
+      employee: complaint.createdBy,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.redirect("/admin/complaints");
   }
-);
+});
+
+router.post("/admin/complaints/:id/update", adminViewAuth, async (req, res) => {
+  try {
+    const { status, remarks } = req.body;
+
+    await Complaint.findByIdAndUpdate(req.params.id, {
+      status,
+      remarks,
+    });
+
+    res.redirect(`/admin/complaints/${req.params.id}`);
+  } catch (error) {
+    console.error(error);
+
+    res.redirect("/admin/complaints");
+  }
+});
 
 /* =========================================
    ANALYTICS
 ========================================= */
 
-router.get(
-  "/admin/analytics",
-  (req, res) => {
+router.get("/admin/analytics", adminViewAuth, async (req, res) => {
+  try {
+    const total = await Complaint.countDocuments();
 
-    res.render(
-      "admin/analytics",
+    const resolved = await Complaint.countDocuments({
+      status: "Resolved",
+    });
+
+    const rejected = await Complaint.countDocuments({
+      status: "Rejected",
+    });
+
+    const pending = await Complaint.countDocuments({
+      status: {
+        $nin: ["Resolved", "Rejected"],
+      },
+    });
+
+    const categoryStats = await Complaint.aggregate([
       {
-        title:
-          "Analytics",
-
-        stats: {
-          total: 124,
-          pending: 43,
-          resolved: 72,
-          rejected: 9,
+        $group: {
+          _id: "$category",
+          count: {
+            $sum: 1,
+          },
         },
-      }
-    );
+      },
+    ]);
 
+    const priorityStats = await Complaint.aggregate([
+      {
+        $group: {
+          _id: "$priority",
+          count: {
+            $sum: 1,
+          },
+        },
+      },
+    ]);
+
+    res.render("admin/analytics", {
+      title: "Analytics",
+
+      stats: {
+        total,
+        pending,
+        resolved,
+        rejected,
+      },
+
+      categoryStats,
+      priorityStats,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.redirect("/admin/dashboard");
   }
-);
+});
 
 /* =========================================
    EMPLOYEES
 ========================================= */
 
-router.get(
-  "/admin/employees",
-  (req, res) => {
+router.get("/admin/employees", adminViewAuth, (req, res) => {
+  res.render("admin/employees", {
+    title: "Employees",
 
-    res.render(
-      "admin/employees",
+    employees: [
       {
-        title:
-          "Employees",
+        employeeId: "EMP001",
 
-        employees: [
-          {
-            employeeId:
-              "EMP001",
+        name: "Vijendra Chandra",
 
-            name:
-              "Vijendra Chandra",
+        email: "vijendra@example.com",
 
-            email:
-              "vijendra@example.com",
+        department: "Engineering",
 
-            department:
-              "Engineering",
+        role: "Employee",
+      },
 
-            role:
-              "Employee",
-          },
+      {
+        employeeId: "EMP002",
 
-          {
-            employeeId:
-              "EMP002",
+        name: "Rahul Sharma",
 
-            name:
-              "Rahul Sharma",
+        email: "rahul@example.com",
 
-            email:
-              "rahul@example.com",
+        department: "HR",
 
-            department:
-              "HR",
+        role: "Employee",
+      },
+    ],
+  });
+});
 
-            role:
-              "Employee",
-          },
-        ],
-      }
-    );
+router.get("/login", (req, res) => {
+  res.render("auth/login", {
+    title: "Login",
+    hideLayout: true,
+  });
+});
 
+import bcrypt from "bcryptjs";
+import viewAuth from "../middlewares/viewAuth.js";
+import adminViewAuth from "../middlewares/adminViewAuth.js";
+
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.render("auth/login", {
+        title: "Login",
+        hideLayout: true,
+        error: "Invalid email or password",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.render("auth/login", {
+        title: "Login",
+        hideLayout: true,
+        error: "Invalid email or password",
+      });
+    }
+
+    req.session.user = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
+    console.log(req.session.user);
+
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.error(error);
+
+    res.render("auth/login", {
+      title: "Login",
+      hideLayout: true,
+      error: "Something went wrong",
+    });
   }
-);
+});
+
+router.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/login");
+  });
+});
 
 export default router;
